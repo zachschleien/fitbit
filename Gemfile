@@ -40,6 +40,9 @@ gem 'fitgem_oauth2', '~>1.0.0'
 
 gem 'figaro'
 
+gem 'json_converter', '~> 0.0.0'
+gem 'thin', '~> 1.7'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

@@ -1,0 +1,22 @@
+class FitbitApiController < ApplicationController
+
+  before_filter :authenticate_user!
+
+  def data_request
+    client = current_user.fitbit_client
+
+    require 'json_converter'
+    converter = JsonConverter.new
+
+    converter.write_to_csv(client.activity_time_series(resource: 'calories', start_date: params[:date], period: '1d'), 'calories.csv')
+    converter.write_to_csv(client.sleep_logs(params[:date]), 'sleep.csv') 
+    converter.write_to_csv(client.activity_time_series(resource: 'steps', start_date: params[:date], period: '1d'), 'steps.csv')
+    converter.write_to_csv(client.weight_logs(start_date: params[:date]), 'weight.csv')
+
+    # Render the JSON 
+    render json: output
+    
+  end   
+end
+
+
