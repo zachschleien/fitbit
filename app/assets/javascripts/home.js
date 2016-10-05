@@ -11,16 +11,17 @@ function init(){
 
   $('#api-request-btn').on('click', function(){
 
-    $.ajax({
-      url: get_request_url(),
-      dataType: 'json',
-      success: function(data){
-        editor.setValue(JSON.stringify(data, null, 2));
-      },
-      error: function(err){
-        console.error(err);
-      }
-    });
+    // $.ajax({
+    //   url: get_request_url(),
+    //   dataType: 'json',
+    //   success: function(data){
+    //     editor.setValue(JSON.stringify(data, null, 2));
+    //   },
+    //   error: function(err){
+    //     console.error(err);
+    //   }
+    // });
+    window.location = get_request_url()
 
   });
 }

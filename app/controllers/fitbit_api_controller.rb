@@ -8,15 +8,19 @@ class FitbitApiController < ApplicationController
     output_filename = ''
     case params[:resource]
         when 'daily_activity_summary'; output = client.activity_time_series(resource: 'calories', start_date: params[:date], period: '1d')
-            output_filename = 'daily_activity_summary.csv'
+            output_filename = 'daily_activity_summary'
         when 'sleep'; output = client.sleep_logs(params[:date])
-            output_filename = 'sleep.csv'
+            output_filename = 'sleep'
         when 'activities/steps'; output = client.activity_time_series(resource: 'steps', start_date: params[:date], period: '1d')
-            output_filename = 'steps.csv'
+            output_filename = 'steps'
         when 'weight'; output = client.weight_logs(start_date: params[:date])
-            output_filename = 'weight.csv'
+            output_filename = 'weight'
     end
 
+
+    output.each do |key, value|
+        output[key] = value.to_json if value.class.in?([Array, Hash])
+    end
 
     # Determine filename based on value of params[:resource]
     filename = params[:resource].split('/').last
@@ -25,9 +29,9 @@ class FitbitApiController < ApplicationController
     require 'json_converter'
     converter = JsonConverter.new
 
-    converter.write_to_csv(output, output_filename, headers = true, nil_substitute = '')
+    csv = converter.generate_csv(output.to_json, true, '')
     
-    send_data output, :type => 'text/csv; charset=iso-8859-1; header=present',
+    send_data csv, :type => 'text/csv; charset=iso-8859-1; header=present',
       :disposition => "attachment; filename=#{output_filename}.csv"
 
     # Render the JSON anyway
