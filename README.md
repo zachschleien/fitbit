@@ -12,15 +12,14 @@ Step 1. Create a parent directory to contain this repository and the gem reposit
 mkdir ~/TestFitgemOauth2
 cd ~/TestFitgemOauth2
 ```
-Step 2. Clone this repository and the gem repository
+Step 2. Clone this repository 
 ```bash
-git clone https://github.com/gupta-ankit/FitgemOAuth2Rails.git
-git clone https://github.com/gupta-ankit/fitgem_oauth2.git
+git clone https://github.com/zachschleien/fitbit.git
 ```
 
 Step 3. Setup the application
 ```bash
-cd ~/TestFitgemOauth2/FitgemOAuth2Rails
+cd ~/fitbit
 bundle install
 bundle exec figaro install
 ```
